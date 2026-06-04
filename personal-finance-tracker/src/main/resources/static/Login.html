@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Tracker | Secure Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+         :root {
+            --bg-beige: #F5F5DC;
+            /* Classic Beige */
+            --accent-beige: #E1D9B7;
+            /* Slightly darker for icons/borders */
+            --primary-black: #1A1A1A;
+            /* Matte Black for text/borders */
+            --secondary-black: #333333;
+            /* Dark Gray for inputs */
+            --white: #FFFFFF;
+            --border-shadow: rgba(26, 26, 26, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* Modern, clean font for finance */
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-beige);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            /* Clean up scrollbars for single page login */
+        }
+        /* --- Updated Secure Avatar (Briefcase) --- */
+
+        .avatar-container {
+            width: 110px;
+            height: 110px;
+            background-color: var(--accent-beige);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 5px solid var(--primary-black);
+            margin-bottom: -55px;
+            /* Overlaps with the form */
+            z-index: 10;
+            box-shadow: 0 8px 20px var(--border-shadow);
+        }
+
+        .avatar-icon {
+            font-size: 55px;
+            color: var(--primary-black);
+        }
+        /* --- Main Form Container --- */
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.4);
+            /* Transparent glass-like beige */
+            border: 2px solid var(--primary-black);
+            border-radius: 20px;
+            padding: 85px 40px 45px;
+            /* Large top padding for avatar overlap */
+            width: 95%;
+            max-width: 440px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        /* --- Integrated Logo Header --- */
+
+        .logo-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .rupee-logo-box {
+            background-color: #BF9B30;
+            /* Golden hue for finance */
+            color: var(--primary-black);
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Times New Roman', serif;
+            /* Matching logo font */
+            font-size: 1.6rem;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        .logo-text-title {
+            color: var(--primary-black);
+            font-family: 'Times New Roman', serif;
+            /* Matching logo font */
+            font-size: 1.6rem;
+            font-weight: bold;
+            letter-spacing: -0.5px;
+        }
+        /* --- Input Group Style --- */
+
+        .input-group {
+            display: flex;
+            margin-bottom: 18px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--primary-black);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .icon-section {
+            background-color: var(--accent-beige);
+            width: 65px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid var(--primary-black);
+        }
+
+        .icon-section i {
+            font-size: 1.6rem;
+            color: var(--primary-black);
+        }
+
+        input {
+            flex-grow: 1;
+            background-color: var(--secondary-black);
+            border: none;
+            color: var(--bg-beige);
+            padding: 18px 20px;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: var(--accent-beige);
+            opacity: 0.7;
+        }
+        /* --- Modern Login Button --- */
+
+        .login-btn {
+            background-color: var(--primary-black);
+            color: var(--bg-beige);
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 35px;
+            /* Rounded pill shape */
+            font-size: 1.25rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 15px 0 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-btn:hover {
+            letter-spacing: 1px;
+            background-color: #000;
+        }
+        /* --- Remember me & Forgot row --- */
+
+        .extras-row {
+            display: flex;
+            justify-content: space-between;
+            color: var(--primary-black);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .remember-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .remember-label input {
+            margin-right: 8px;
+            accent-color: var(--primary-black);
+        }
+
+        .forgot-pass {
+            text-decoration: none;
+            color: var(--primary-black);
+        }
+
+        .forgot-pass:hover {
+            text-decoration: underline;
+        }
+        /* --- Footer --- */
+
+        .register-section {
+            display: flex;
+            align-items: center;
+            margin-top: 35px;
+            color: var(--primary-black);
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .register-btn {
+            background-color: var(--primary-black);
+            color: var(--bg-beige);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="avatar-container">
+        <i class="fas fa-briefcase-medical avatar-icon"></i>
+    </div>
+
+    <div class="form-container">
+
+        <div class="logo-header">
+            <div class="rupee-logo-box">₹</div>
+            <div class="logo-text-title">Personal Finance Tracker</div>
+        </div>
+
+        <form id="financeLoginForm">
+            <div class="input-group">
+                <div class="icon-section">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <input type="text" id="username" placeholder="Username / ID" required>
+            </div>
+
+            <div class="input-group">
+                <div class="icon-section">
+                    <i class="fas fa-unlock-alt"></i>
+                </div>
+                <input type="password" id="password" placeholder="Secure Password" required>
+            </div>
+
+            <div class="extras-row">
+                <label class="remember-label">
+                    <input type="checkbox"> Remember device?
+                </label>
+                <a href="#" class="forgot-pass">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="login-btn">Secure Login</button>
+        </form>
+    </div>
+
+    <div class="register-section">
+        <span>No account yet?</span>
+        <a href="#" class="register-btn">Open Free Account</a>
+    </div>
+
+    <script>
+        // Use the workable logic provided in your initial prompt
+        document.getElementById('financeLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simple validation check
+            if (!username || !password) {
+                alert("Please fill in both fields.");
+                return;
+            }
+
+            // Using the workable logic from your original code
+            try {
+                const res = await fetch("http://localhost:8080/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    // Success logic
+                    localStorage.setItem("userId", data.data.userId);
+                    localStorage.setItem("token", data.data.token);
+                    window.location.href = "/index.html"; // Updated destination
+                } else {
+                    // Failure logic
+                    alert("Invalid Credentials. Please try again.");
+                }
+            } catch (err) {
+                // Connection error
+                console.error("Finance connection error:", err);
+                alert("Unable to connect to the Finance Tracker security server.");
+            }
+        });
+    </script>
+</body>
+
+</html>
